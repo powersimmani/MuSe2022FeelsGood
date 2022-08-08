@@ -1,16 +1,20 @@
-# MuSe-Stress 2022 in Team FeelsGood: LSTM Regressor + Transformer Encoder
+# MuSe-2022 Baseline Model: LSTM Regressor
 
-## Introduction 
+[Homepage](https://www.muse-challenge.org) || [Baseline Paper](https://www.researchgate.net/publication/359875358_The_MuSe_2022_Multimodal_Sentiment_Analysis_Challenge_Humor_Emotional_Reactions_and_Stress)
 
-This git contains the MuSe 2022 participating team FeelsGood output. We added a Transformer Encoder model to the existing Baseline LSTM model and organized it to be compatible with the existing code as much as possible. For details about competition, please see the [Baseline Paper](https://www.researchgate.net/publication/359875358_The_MuSe_2022_Multimodal_Sentiment_Analysis_Challenge_Humor_Emotional_Reactions_and_Stress).
 
-If you would like to see our approach and its results please see [Our paper](https://willbeupdated.com) 
+## Sub-challenges and Results 
+For details, please see the [Baseline Paper](https://www.researchgate.net/publication/359875358_The_MuSe_2022_Multimodal_Sentiment_Analysis_Challenge_Humor_Emotional_Reactions_and_Stress). If you want to sign up for the challenge, please fill the form 
+[here](https://www.muse-challenge.org/challenge/participation) for MuSe-Humor and MuSe-Stress. For MuSe-Reaction, please contact competitions \[at\] hume.ai 
 
-The followings are the deliverables from this project.
+* MuSe-Humor: predicting presence/absence of humor in football press conference recordings. 
+*Official baseline*: **.8480** AUC.
 
-* New extracted feature: [Pose](https://drive.google.com/file/d/1F2SnPWh-Wcrd6i4nQ4svOx2Qmp1VzQSk/view?usp=sharing)
-* Trained models : [Download](https://drive.google.com/file/d/1y499JkI1OxhVgN1BiV49Se8LBFmu57g7/view?usp=sharing)
-
+* MuSe-Reaction: predicting the intensity of seven emotions (Adoration, Amusement, Anxiety, Disgust, Empathic Pain, Fear,
+Surprise). *Official baseline* : **.2801** mean Pearson's correlation over all seven classes.
+* MuSe-Stress: regression on valence and arousal signals for persons in a stressed disposition. *Official baselines*:
+**.4931** CCC for valence, **.4761** CCC for (physiological) arousal, **.4585** CCC as the mean of best CCC for arousal and 
+best CCC for valence (*Combined*). Note that the *Combined* score will be used to determine the challenge winner.
 
 ## Installation
 It is highly recommended to run everything in a Python virtual environment. Please make sure to install the packages listed 
@@ -20,7 +24,6 @@ You can then e.g. run the unimodal baseline reproduction calls in the ``*.sh`` f
 
 ## Settings
 The ``main.py`` script is used for training and evaluating models. Most important options:
-* ``--model_type``: choose either `LSTM` or `Transformer`
 * ``--task``: choose either `humor`, `reaction` or `stress` 
 * ``--feature``: choose a feature set provided in the data (in the ``PATH_TO_FEATURES`` defined in ``config.py``). Adding 
 ``--normalize`` ensures normalization of features (recommended for eGeMAPS features).
@@ -45,6 +48,26 @@ A checkpoint model can be loaded and evaluated as follows:
 `` main.py --task humor --feature vggface2 --eval_model /your/checkpoint/directory/vggface2/model_102.pth`` 
 
 Note that egemaps features must be normalized (``--normalize``).
+
+### Fusion results 
+
+#### Late Fusion (MuSe-Humor, MuSe-Stress)
+The idea of the late fusion implementation is to treat the predictions to be fused as a new feature set that is 
+stored in the feature directory (alongside with e.g. ``egemaps``, ``ds`` etc.). The script ``late_fusion.py`` creates 
+such a feature set, given trained models. Example call:
+
+`` python3 late_fusion_preparation.py --task humor --model_ids 2022-03-26-11-04_[ds]_[64_2_True_64]_[0.001_256] 2022-03-26-11-11_[vggface2]_[64_2_True_64]_[0.0001_256] --checkpoint_seeds 105 102``
+
+The model ids are directories under ``MODEL_FOLDER/task`` (``MODEL_FOLDER`` is specified in ``config.py``).
+For further details see the ``ArgumentParser`` in ``late_fusion_preparation.py``. 
+
+This script will create a new feature set in the feature directory specified in ``config.py``. This feature set 
+can then be used with the ``main.py`` script as any other feature.
+
+#### Early Fusion (MuSe-Reaction)
+Similarly, for early fusion, an extra feature set is created. The corresponding script is ``early_fusion_preparation.py``.
+Example call: 
+`` python3 early_fusion_preparation.py --task reaction --feature_sets VGGFace2 DeepSpectrum``
 
 ##  Citation:
 

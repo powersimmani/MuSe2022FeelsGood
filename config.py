@@ -4,7 +4,7 @@ import torch
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # adjust your paths here. Recommended to keep it that way in order not to run into git conflicts
-BASE_PATH = '../MuSe2022'
+BASE_PATH = 'data'
 
 PATH_TO_FEATURES = {
     'humor': os.path.join(BASE_PATH, 'c1_muse_humor/feature_segments'),

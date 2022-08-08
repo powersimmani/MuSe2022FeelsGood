@@ -12,11 +12,10 @@ import config
 from utils import Logger, seed_worker, log_results
 from train import train_model
 from eval import evaluate, calc_ccc, calc_auc, mean_ccc,mean_pearsons 
-from model import Model
+from model import Model, TFModel
 from loss import CCCLoss, WrappedBCELoss, WrappedMSELoss
 from dataset import MuSeDataset, custom_collate_fn
 from data_parser import load_data
-
 
 def parse_args():
 
@@ -71,6 +70,9 @@ def parse_args():
                         help='L2-Penalty')
     parser.add_argument('--eval_model', type=str, default=None,
                         help='Specify model which is to be evaluated; no training with this option (default: False).')
+
+    parser.add_argument('--model_type', type=str, default="LSTM",
+                        help='Specify model type which is to be traind and evaluated (default: RNN).')
 
     args = parser.parse_args()
     if not (args.result_csv is None) and args.predict:
@@ -132,10 +134,14 @@ def main(args):
         for seed in seeds:
             torch.manual_seed(seed)
 
-            model = Model(args)
+            if args.model_type == "LSTM":# Checking the model type
+                model = Model(args)
+            else:
+                model = TFModel(args)
+
 
             print('=' * 50)
-            print(f'Training model... [seed {seed}] for at most {args.epochs} epochs')
+            print(f'Training model {args.model_type}... [seed {seed}] for at most {args.epochs} epochs')
 
             val_loss, val_score, best_model_file = train_model(args.task, model, data_loader, args.epochs,
                                                                args.lr, args.paths['model'], seed, use_gpu=args.use_gpu,
@@ -194,10 +200,10 @@ def main(args):
 if __name__ == '__main__':
     args = parse_args()
 
-    args.log_file_name = '{}_[{}]_[{}]_[{}_{}_{}_{}]_[{}_{}]'.format(
-        datetime.now(tz=tz.gettz()).strftime("%Y-%m-%d-%H-%M"), args.feature, args.emo_dim,
+    args.log_file_name = '{}_{}_[{}]_[{}]_[{}_{}_{}_{}]_[{}_{}]'.format(
+        datetime.now(tz=tz.gettz()).strftime("%Y-%m-%d-%H-%M"), args.model_type,args.feature, args.emo_dim,
         args.d_rnn, args.rnn_n_layers, args.rnn_bi, args.d_fc_out, args.lr, args.batch_size) if args.task == 'stress' else \
-        '{}_[{}]_[{}_{}_{}_{}]_[{}_{}]'.format(datetime.now(tz=tz.gettz()).strftime("%Y-%m-%d-%H-%M"), args.feature.replace(os.path.sep, "-"),
+        '{}_{}_[{}]_[{}_{}_{}_{}]_[{}_{}]'.format(datetime.now(tz=tz.gettz()).strftime("%Y-%m-%d-%H-%M"), args.model_type, args.feature.replace(os.path.sep, "-"),
                                                  args.d_rnn, args.rnn_n_layers, args.rnn_bi, args.d_fc_out, args.lr,args.batch_size)
 
     # adjust your paths in config.py
