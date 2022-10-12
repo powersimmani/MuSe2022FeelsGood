@@ -37,31 +37,21 @@ For more details, please see the ``parse_args()`` method in ``main.py``.
 
 
 ## Citation:
-
-The MuSe2022 baseline paper is available as a preprint [here](https://www.researchgate.net/publication/359875358_The_MuSe_2022_Multimodal_Sentiment_Analysis_Challenge_Humor_Emotional_Reactions_and_Stress)
-
 ```bibtex
-@inproceedings{Christ22-TM2,
-  title={The MuSe 2022 Multimodal Sentiment Analysis Challenge: Humor, Emotional Reactions, and Stress},
-  author={Christ, Lukas and Amiriparian, Shahin and Baird, Alice and Tzirakis, Panagiotis and Kathan, Alexander and Müller, Niklas and Stappen, Lukas and Meßner, Eva-Maria and König, Andreas and Cowen, Alan and Cambria, Erik and Schuller, Bj\"orn W. },
-  booktitle={Proceedings of the 3rd Multimodal Sentiment Analysis Challenge},
-  year={2022},
-  address = {Lisbon, Portugal},
-  publisher = {Association for Computing Machinery},
-  note = {co-located with ACM Multimedia 2022, to appear}
+@inproceedings{10.1145/3551876.3554807,
+author = {Park, Ho-min and Yun, Ilho and Kumar, Ajit and Singh, Ankit Kumar and Choi, Bong Jun and Singh, Dhananjay and De Neve, Wesley},
+title = {Towards Multimodal Prediction of Time-Continuous Emotion Using Pose Feature Engineering and a Transformer Encoder},
+year = {2022},
+isbn = {9781450394840},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3551876.3554807},
+doi = {10.1145/3551876.3554807},
+booktitle = {Proceedings of the 3rd International on Multimodal Sentiment Analysis Workshop and Challenge},
+pages = {47–54},
+numpages = {8},
+keywords = {multimodal fusion, emotion detection, multimodal sentiment analysis, human pose},
+location = {Lisboa, Portugal},
+series = {MuSe' 22}
 }
-
-```
-
-MuSe 2021 baseline paper:
-
-```bibtex
-@incollection{stappen2021muse,
-  title={The MuSe 2021 multimodal sentiment analysis challenge: sentiment, emotion, physiological-emotion, and stress},
-  author={Stappen, Lukas and Baird, Alice and Christ, Lukas and Schumann, Lea and Sertolli, Benjamin and Messner, Eva-Maria and Cambria, Erik and Zhao, Guoying and Schuller, Bj{\"o}rn W},
-  booktitle={Proceedings of the 2nd on Multimodal Sentiment Analysis Challenge},
-  pages={5--14},
-  year={2021}
-}
-
 ```
