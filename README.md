@@ -7,11 +7,11 @@
 
 This git contains the MuSe 2022 participating team FeelsGood output. We added a Transformer Encoder model to the existing Baseline LSTM model and organized it to be compatible with the existing code as much as possible. For details about competition, please see the [Baseline Paper](https://www.researchgate.net/publication/359875358_The_MuSe_2022_Multimodal_Sentiment_Analysis_Challenge_Humor_Emotional_Reactions_and_Stress).
 
-If you would like to see our approach and its results please see [Our paper](https://willbeupdated.com) 
+If you would like to see our approach and its results please see [Our paper](https://dl.acm.org/doi/pdf/10.1145/3551876.3554807) 
 
 The followings are the deliverables from this project.
 
-* New extracted feature, Pose : [Download](https://willbeupdated.com)
+* New extracted feature, Pose : [Download](https://drive.google.com/drive/folders/19jevZIZt51tJ67OtQyumMaHFrhRL4AJP?usp=share_link)
 * Trained models : [Unimodal](https://willbeupdated.com) [Multimodal](https://willbeupdated.com)
 
 
